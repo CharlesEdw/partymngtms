@@ -1,5 +1,6 @@
 package com.agileea.partymngrms.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.agileea.partymngrms.Model.*;
@@ -12,4 +13,5 @@ public interface PartyRepo extends JpaRepository<Party, Long> {
 
     Optional<Party> findPartyById(Long id);
     
+    Optional<List<Party>> findPartyByFirstname(String firstname);
 }
