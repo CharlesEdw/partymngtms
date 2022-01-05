@@ -6,12 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Index;
+
 
 @Entity
+@Table(indexes = {
+    @Index(name = "IdxFirstnameSurname", columnList = "firstname, surname"), 
+    @Index(name = "IdxSurnameFirstname", columnList = "surname, firstname"),
+    @Index(name = "IdxOrgname", columnList = "orgname")
+})
 public class Party implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String firstname;
     private String surname;
     private String orgname;
