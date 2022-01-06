@@ -40,15 +40,40 @@ public class PartyResource {
         } catch (Throwable e) {
             e.printStackTrace();
             party = null;
+            return new ResponseEntity<>(party, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/firstname")
     public ResponseEntity<List<Party>> getPartyByFirstname(@RequestParam("firstname") String firstname) {
         List<Party> parties;
         try {
             parties = (List<Party>) partyService.findPartyByFirstname(firstname);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            parties = null;
+            return new ResponseEntity<>(parties, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(parties, HttpStatus.OK);
+    }
+    @GetMapping("/surname")
+    public ResponseEntity<List<Party>> getPartyBySurname(@RequestParam("surname") String surname) {
+        List<Party> parties;
+        try {
+            parties = (List<Party>) partyService.findPartyBySurname(surname);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            parties = null;
+            return new ResponseEntity<>(parties, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(parties, HttpStatus.OK);
+    }
+    @GetMapping("/orgname")
+    public ResponseEntity<List<Party>> getPartyByOrgname(@RequestParam("orgname") String orgname) {
+        List<Party> parties;
+        try {
+            parties = (List<Party>) partyService.findPartyByOrgname(orgname);
         } catch (Throwable e) {
             e.printStackTrace();
             parties = null;
