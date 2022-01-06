@@ -33,9 +33,6 @@ public class Party implements Serializable {
     public Party() {
         super();
     }
-    
-
-    
 
     public Party(Long id, String firstname, String surname, String orgname, String dob, String imageurl, Boolean isorg,
             String familyname) {

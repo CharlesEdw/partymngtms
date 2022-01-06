@@ -40,6 +40,19 @@ public class PartyService {
          + firstName + " was not found"));
 
     }
+    public List<Party> findPartyBySurname(String surName) throws Throwable{
+        return partyRepo.findPartyBySurname(surName)
+        .orElseThrow(() -> new com.agileea.partymngrms.Exceptions.UserNotFoundException("Party by Surname "
+         + surName + " was not found"));
+
+    }
+    public List<Party> findPartyByOrgname(String orgName) throws Throwable{
+        return partyRepo.findPartyByOrgname(orgName)
+        .orElseThrow(() -> new com.agileea.partymngrms.Exceptions.UserNotFoundException("Party by Orgname "
+         + orgName + " was not found"));
+
+    }
+
 
     public void deleteParty(Long id) {
         partyRepo.deleteById(id);
