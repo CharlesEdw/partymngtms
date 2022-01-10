@@ -102,4 +102,8 @@ public class Party implements Serializable {
         this.familyname = familyname;
     }
 
+    public Party orElseThrow(Object object) {
+        return null;
+    }
+
 }   
