@@ -1,5 +1,6 @@
 package com.agileea.partymngrms.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,10 @@ import com.agileea.partymngrms.Model.*;
 import com.agileea.partymngrms.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 
 @Service
 public class PartyService {
@@ -23,7 +24,7 @@ public class PartyService {
     
     public Party addParty(Party party) {
         System.out.println("Party in Service: "+party);
-        return partyRepo.saveAndFlush(party);
+        return partyRepo.save(party);
     }
 
     /* Original 
@@ -32,13 +33,18 @@ public class PartyService {
     }
     */
 
-    public Page<Party> findAllParties(Optional<Integer> page, Optional<String> sortBy ) {
-            return partyRepo.findAll(
-                PageRequest.of(
-                    page.orElse(0), 4,
-                    Sort.by(Direction.ASC, sortBy.orElse("id"))
-                )
-            );
+    public List<Party> findAllParties(  Optional<Integer> pageNo, 
+                                        Optional<Integer> pageSize, 
+                                        Optional<String> sortBy ) {
+
+            Pageable paging = PageRequest.of(pageNo.orElse(0), pageSize.orElse(4), Sort.by(sortBy.orElse("id")));
+
+            Page<Party> pagedResult = partyRepo.findAll(paging);
+            if(pagedResult.hasContent()) {
+                return pagedResult.getContent();
+            } else {
+                return new ArrayList<Party>();
+            }
     }
     public Party updateParty(Party party) {
         return partyRepo.save(party);
@@ -64,8 +70,8 @@ public class PartyService {
 
     }
 
-    public Party findPartyById(Long id) {
-        return partyRepo.getById(id);
+    public Optional<Party> findPartyById(Long id) {
+        return partyRepo.findById(id);
     }
 
     public void deleteParty(Long id) {

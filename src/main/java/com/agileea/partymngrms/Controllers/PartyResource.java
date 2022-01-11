@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Page;
+
 
 @RestController
 @RequestMapping("/party")
@@ -35,11 +35,12 @@ public class PartyResource {
     }
     */
     @GetMapping("/all")
-    public ResponseEntity<Page<Party>> getAllParties(
-        @RequestParam Optional<Integer> page,
-        @RequestParam Optional<String> sortBy
+    public ResponseEntity<List<Party>> getAllParties(
+        @RequestParam(defaultValue= "0") Optional<Integer> pageNo,
+        @RequestParam(defaultValue= "4") Optional<Integer> pageSize,
+        @RequestParam(defaultValue= "id") Optional<String> sortBy
         ) {
-        Page<Party> parties =partyService.findAllParties(page, sortBy);
+        List<Party> parties =partyService.findAllParties(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(parties, HttpStatus.OK);
     }
 
@@ -81,20 +82,20 @@ public class PartyResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Party> getPartyById(@PathVariable("id") Long id) {
-        Party party;
+        Party partyFound = new Party();
         try {
-            System.out.println("Id passed in: "+ id);
-            party = (Party) partyService.findPartyById(id);
-            System.out.println(party);
+           // System.out.println("Id passed in: "+ id);
+            partyFound = partyService.findPartyById(id).orElse(null);
+            //System.out.println("Controller has Party as: "+ partyFound);
         } catch (Throwable e) {
             e.printStackTrace();
-            party = null;
+            partyFound = null;
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(party, HttpStatus.OK);
+        return new ResponseEntity<>(partyFound, HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Party> addParty(@RequestBody Party party) {
         System.out.println("Party in Controller: "+party);
         Party newparty = partyService.addParty(party);
