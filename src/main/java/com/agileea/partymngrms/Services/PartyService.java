@@ -70,10 +70,14 @@ public class PartyService {
 
     }
 
-    public List<Party> findPartyById(Long id) {
+    public List<Party> findListPartyById(Long id) {
         List<Party> parties = new ArrayList<Party>();
         parties.add(partyRepo.findPartyById(id));
         return parties;
+    }
+
+    public Party findPartyById(Long id) {
+        return (Party) partyRepo.findPartyById(id);
     }
 
     public void deleteParty(Long id) {
