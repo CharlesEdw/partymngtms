@@ -81,18 +81,18 @@ public class PartyResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Party> getPartyById(@PathVariable("id") Long id) {
-        Party partyFound = new Party();
+    public ResponseEntity<List<Party>> getPartyById(@PathVariable("id") Long id) {
+        List<Party> partiesFound;
         try {
            // System.out.println("Id passed in: "+ id);
-            partyFound = partyService.findPartyById(id).orElse(null);
+           partiesFound = (List<Party>) partyService.findPartyById(id);
             //System.out.println("Controller has Party as: "+ partyFound);
         } catch (Throwable e) {
             e.printStackTrace();
-            partyFound = null;
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            partiesFound = null;
+            return new ResponseEntity<>(partiesFound,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(partyFound, HttpStatus.OK);
+        return new ResponseEntity<>(partiesFound, HttpStatus.OK);
     }
 
     @PostMapping

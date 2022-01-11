@@ -12,7 +12,7 @@ public interface PartyRepo extends PagingAndSortingRepository<Party, Long> {
 
     void deleteById(Long id);
 
-    Optional<Party> findById(Long id); 
+    Party findPartyById(Long id); 
 
     Optional<List<Party>> findPartyByFirstname(String firstname);
 
