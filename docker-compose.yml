@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  API:
+    image: 'partymngrms.jar'
+    ports:
+      - "8080:8080"
+    
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Post12345!
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update

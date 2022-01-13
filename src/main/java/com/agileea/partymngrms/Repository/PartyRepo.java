@@ -3,16 +3,17 @@ package com.agileea.partymngrms.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.agileea.partymngrms.Model.*;
+import com.agileea.partymngrms.Model.Party;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PartyRepo extends JpaRepository<Party, Long> {
+
+public interface PartyRepo extends PagingAndSortingRepository<Party, Long> {
 
     void deleteById(Long id);
 
-    Optional<Party> findPartyById(Long id);
-    
+    Party findPartyById(Long id); 
+
     Optional<List<Party>> findPartyByFirstname(String firstname);
 
     Optional<List<Party>> findPartyBySurname(String surname);
