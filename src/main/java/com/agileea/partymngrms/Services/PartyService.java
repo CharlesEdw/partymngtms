@@ -71,13 +71,21 @@ public class PartyService {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     public List<Party> findPartyById(Long id) {
+=======
+    public List<Party> findListPartyById(Long id) {
+>>>>>>> 66598d4a553e7192fc8a83581986f74bad5c3882
         List<Party> parties = new ArrayList<Party>();
         parties.add(partyRepo.findPartyById(id));
         return parties;
     }
 >>>>>>> 661da3ef8c1f67291e22b448efc1676dc5039f4e
+
+    public Party findPartyById(Long id) {
+        return (Party) partyRepo.findPartyById(id);
+    }
 
     public void deleteParty(Long id) {
         partyRepo.deleteById(id);
